@@ -8,22 +8,16 @@
 <body>
 	<h1>Welcome to your book shelf</h1>
 	<h2>Your current books are:</h2>
-	<p id="booklist"></p>
-	<br><br><hr>
+	<ul id="booklist">
+	</ul>
+	<br><hr><br>
+
 	<h3>Add a book</h3>
 	<form id="addBook">
 		Title:<br>
 		<input type="text" name="title"><br>
 		Author:<br>
 		<input type="text" name="author"><button type="button" onclick="addBook()">Add book</button> 
-	</form>
-	<br><br><hr>
-	<h3>Remove a book</h3>
-	<form id="removeBook">
-		Title:<br>
-		<input type="text" name="title"><br>
-		Author:<br>
-		<input type="text" name="author"><button type="button" onclick="removeBook()">Remove book</button> 
 	</form>
 	
 <script>
@@ -39,23 +33,36 @@ bookShelf.push(new book("Slaughterhouse 5", "Kurt Vonnegut"));
 bookShelf.push(new book("Catch-22", "Joseph Heller"));
 bookShelf.push(new book("Foundation", "Isaac Asimov"));
 
-function refreshBookList() {
-	bookList = "";
-	for (var i = 0; i < bookShelf.length; i++) {
-	bookList += bookShelf[i].title + "<br>";
+function populateBookList() {
+	var oldList = document.getElementById("booklist");
+	while (oldList.hasChildNodes()) {
+		oldList.removeChild(oldList.firstChild);
 	}
-	document.getElementById("booklist").innerHTML = bookList;
+	for (var i = 0; i< bookShelf.length; i++) {
+		var li = document.createElement("li");
+		var title = bookShelf[i].title;
+		var author = bookShelf[i].author;
+		var t = document.createTextNode(title + " by " + author);
+		li.appendChild(t);
+		document.getElementById("booklist").appendChild(li);
+	}
 }
 
-refreshBookList();
+populateBookList();
 
 function addBook() {
 	var newTitle = document.getElementById("addBook").elements[0].value;
 	var newAuthor = document.getElementById("addBook").elements[1].value;
 	bookShelf.push(new book(newTitle, newAuthor));
-	refreshBookList();
+	populateBookList();
 }
 
+function removeBook() {
+	var removeTitle = document.getElementById("removebook").elements[0].value;
+	var removeAuthor = document.getElementById("removebook").elements[1].value;
+	
+	refreshBookList();
+	}
 
 </script>
 
