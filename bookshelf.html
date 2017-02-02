@@ -50,11 +50,27 @@ function populateBookList() {
 
 populateBookList();
 
+function addDeleteButtons() {
+	var myNodeList = document.getElementsByTagName("LI");
+	for (var i = 0; i < myNodeList.length; i++) {
+		var span = document.createElement("SPAN");
+		var txt = document.createTextNode("  \u00D7");
+		span.className = "close";
+		span.appendChild(txt);
+		myNodeList[i].appendChild(span);
+	}
+}
+
+addDeleteButtons();
+
+
+
 function addBook() {
 	var newTitle = document.getElementById("addBook").elements[0].value;
 	var newAuthor = document.getElementById("addBook").elements[1].value;
 	bookShelf.push(new book(newTitle, newAuthor));
 	populateBookList();
+	addDeleteButtons();
 }
 
 function removeBook() {
