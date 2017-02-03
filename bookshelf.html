@@ -27,10 +27,13 @@ function book(title, author) {
 }
 
 function deleteBook(bookId) {
+	var confirmDelete = confirm("Are you sure you want to delete this book?");
+	if (confirmDelete) {
 	var toDelete = bookId.parentElement.id;
 	console.log(bookShelf.splice(toDelete, 1));
 	console.log(toDelete);
 	populateBookList();
+	}
 }
 
 
@@ -68,8 +71,12 @@ function populateBookList() {
 function addBook() {
 	var newTitle = document.getElementById("addBook").elements[0].value;
 	var newAuthor = document.getElementById("addBook").elements[1].value;
+	if (newTitle == "" || newAuthor == "") {
+		alert("Title and Author must be filled in");
+	} else {
 	bookShelf.push(new book(newTitle, newAuthor));
 	populateBookList();
+	}
 }
 
 
