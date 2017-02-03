@@ -26,8 +26,11 @@ function book(title, author) {
 	this.author = author;
 }
 
-function deleteBook() {
-	console.log("click 2!");
+function deleteBook(bookId) {
+	var toDelete = bookId.parentElement.id;
+	console.log(bookShelf.splice(toDelete, 1));
+	console.log(toDelete);
+	populateBookList();
 }
 
 
@@ -55,9 +58,10 @@ function populateBookList() {
 		var span = document.createElement("SPAN");
 		var txt = document.createTextNode("  \u00D7");
 		span.className = "close";
-		span.onclick = function() { deleteBook(); };
+		span.onclick = function() { deleteBook(this); };
 		span.appendChild(txt);
 		li.appendChild(span);
+		li.id = i;
 	}
 }
 
