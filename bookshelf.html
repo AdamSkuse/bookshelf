@@ -19,8 +19,8 @@
 		Author:<br>
 		<input type="text" name="author"><button type="button" onclick="addBook()">Add book</button> 
 	</form>
-	
 <script>
+
 function book(title, author) {
 	this.title = title;
 	this.author = author;
@@ -33,11 +33,23 @@ bookShelf.push(new book("Slaughterhouse 5", "Kurt Vonnegut"));
 bookShelf.push(new book("Catch-22", "Joseph Heller"));
 bookShelf.push(new book("Foundation", "Isaac Asimov"));
 
+function addDeleteButtons() {
+	var close = document.getElementsByClassName("close");
+	for (var i = 0; i < close.length; i++) {
+		close[i].onclick = function() {
+			var div = this.parentElement;
+			div.style.display = "none";
+		}	
+	}
+}
+
 function populateBookList() {
+	
 	var oldList = document.getElementById("booklist");
 	while (oldList.hasChildNodes()) {
 		oldList.removeChild(oldList.firstChild);
 	}
+
 	for (var i = 0; i< bookShelf.length; i++) {
 		var li = document.createElement("li");
 		var title = bookShelf[i].title;
@@ -45,40 +57,26 @@ function populateBookList() {
 		var t = document.createTextNode(title + " by " + author);
 		li.appendChild(t);
 		document.getElementById("booklist").appendChild(li);
-	}
-}
-
-populateBookList();
-
-function addDeleteButtons() {
-	var myNodeList = document.getElementsByTagName("LI");
-	for (var i = 0; i < myNodeList.length; i++) {
 		var span = document.createElement("SPAN");
 		var txt = document.createTextNode("  \u00D7");
 		span.className = "close";
 		span.appendChild(txt);
-		myNodeList[i].appendChild(span);
+		li.appendChild(span);
+
 	}
+
+	addDeleteButtons();
+
 }
-
-addDeleteButtons();
-
-
 
 function addBook() {
 	var newTitle = document.getElementById("addBook").elements[0].value;
 	var newAuthor = document.getElementById("addBook").elements[1].value;
 	bookShelf.push(new book(newTitle, newAuthor));
 	populateBookList();
-	addDeleteButtons();
 }
 
-function removeBook() {
-	var removeTitle = document.getElementById("removebook").elements[0].value;
-	var removeAuthor = document.getElementById("removebook").elements[1].value;
-	
-	refreshBookList();
-	}
+populateBookList();
 
 </script>
 
